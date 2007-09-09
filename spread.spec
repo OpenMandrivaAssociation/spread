@@ -1,12 +1,13 @@
 %define pymod 1.5
 
 %define	major 1
-%define libname	%mklibname spread %{major}
+%define libname %mklibname spread %{major}
+%define develname %mklibname spread -d
 
 Summary:	Multicast Group Communication Framework
 Name:		spread
 Version:	3.17.4
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		System/Servers
 License:	BSD-style
 URL:		http://www.spread.org/
@@ -54,14 +55,14 @@ enable the construction of scalable distributed applications, allowing
 application builders to focus on the differentiating components of their
 application.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Static library and header files for the libevent library
 Group:		Development/C
-Obsoletes:	%{name}-devel
-Provides:	%{name}-devel
 Requires:	%{libname} = %{version}
+Provides:	lib%{name}-devel = %{version}-%{release}
+Obsoletes:	%{mklibname spread 1 -d}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 Spread is a toolkit that provides a high performance messaging service that is
 resilient to faults across external or internal networks. Spread functions as a
 unified message bus for distributed applications, and provides highly tuned
@@ -183,7 +184,7 @@ EOF
 %defattr(-,root,root)
 %{_libdir}/lib*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_libdir}/lib*.so
 %{_libdir}/lib*.a
@@ -195,5 +196,3 @@ EOF
 %doc SpreadModule-%{pymod}/CHANGES SpreadModule-%{pymod}/doc.txt SpreadModule-%{pymod}/LICENSE
 %doc SpreadModule-%{pymod}/README SpreadModule-%{pymod}/TODO.txt
 %{_libdir}/python*/site-packages/*
-
-
