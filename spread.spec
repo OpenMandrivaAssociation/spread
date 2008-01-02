@@ -25,6 +25,7 @@ Requires(postun): rpm-helper
 BuildRequires:	flex
 BuildRequires:	python-devel
 BuildRequires:	groff-for-man
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Spread is a toolkit that provides a high performance messaging service that is
