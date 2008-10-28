@@ -1,5 +1,3 @@
-%define pymod 1.5
-
 %define	major 2
 %define libname %mklibname spread %{major}
 %define develname %mklibname spread -d
@@ -12,7 +10,6 @@ Group:		System/Servers
 License:	BSD-style
 URL:		http://www.spread.org/
 Source0:	spread-src-%{version}.tar.gz
-Source1:	http://www.zope.org/Members/tim_one/spread/SpreadModule-%{pymod}/SpreadModule-%{pymod}.tar.bz2
 Source2:	spread.init
 Source3:	spread.sysconfig
 Patch0:		spread-soname.diff
@@ -23,9 +20,8 @@ Requires(preun): rpm-helper
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 BuildRequires:	flex
-BuildRequires:	python-devel
 BuildRequires:	groff-for-man
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Spread is a toolkit that provides a high performance messaging service that is
@@ -59,6 +55,7 @@ application.
 Summary:	Static library and header files for the libevent library
 Group:		Development/C
 Requires:	%{libname} = %{version}
+Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 Obsoletes:	%{mklibname spread 1 -d}
 
@@ -76,23 +73,9 @@ application.
 
 This package includes the necessary files to develop systems with Spread.
 
-%package -n	python-spread
-Summary:	Python wrapper for Spread client libraries
-Group:		Development/Python
-
-%description -n	python-spread
-This package contains a simple Python wrapper module for the Spread toolkit.
-The wrapper is known to be compatible with Python 2.3 and 2.4. It may work
-with earlier Pythons, but this has not been tested.
-
-Spread (www.spread.org) is a group communications package.  You'll need to
-download and install it separately.  The Python API has been built and tested
-against Spreads 3.16.1 through 3.17.3, although at least Spread 3.17 is
-required to use this version of the wrapper. 3.17.3 is recommended.
-
 %prep
 
-%setup -q -n spread-src-%{version} -a1
+%setup -q -n spread-src-%{version}
 %patch0 -p0 -b .soname
 %patch1 -p0 -b .mdv_config
 %patch2 -p1 -b .force_man_page_format
@@ -107,10 +90,6 @@ cp %{SOURCE3} spread.sysconfig
     --with-pid-dir=/var/run/spread
 
 %make
-
-pushd SpreadModule-%{pymod}
-    python setup.py build_ext -I .. -L ..
-popd
 
 %install
 rm -rf %{buildroot}
@@ -127,10 +106,6 @@ install -m0755 spread.init %{buildroot}%{_initrddir}/spread
 install -m0644 spread.sysconfig %{buildroot}%{_sysconfdir}/sysconfig/spread
 
 touch %{buildroot}/var/log/spread/spread.log
-
-pushd SpreadModule-%{pymod}
-    python setup.py install --root %{buildroot}
-popd
 
 # install log rotation stuff
 cat > %{buildroot}%{_sysconfdir}/logrotate.d/spread << EOF
@@ -195,9 +170,3 @@ rm -rf %{buildroot}
 %{_libdir}/lib*.a
 %{_includedir}/*
 %{_mandir}/man3/*
-
-%files -n python-spread
-%defattr(-,root,root)
-%doc SpreadModule-%{pymod}/CHANGES SpreadModule-%{pymod}/doc.txt SpreadModule-%{pymod}/LICENSE
-%doc SpreadModule-%{pymod}/README SpreadModule-%{pymod}/TODO.txt
-%{_libdir}/python*/site-packages/*
