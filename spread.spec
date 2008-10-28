@@ -1,22 +1,22 @@
 %define pymod 1.5
 
-%define	major 1
+%define	major 2
 %define libname %mklibname spread %{major}
 %define develname %mklibname spread -d
 
 Summary:	Multicast Group Communication Framework
 Name:		spread
-Version:	3.17.4
-Release:	%mkrel 5
+Version:	4.0.0
+Release:	%mkrel 1
 Group:		System/Servers
 License:	BSD-style
 URL:		http://www.spread.org/
-Source0:	spread-src-%{version}.tar.bz2
+Source0:	spread-src-%{version}.tar.gz
 Source1:	http://www.zope.org/Members/tim_one/spread/SpreadModule-%{pymod}/SpreadModule-%{pymod}.tar.bz2
 Source2:	spread.init
 Source3:	spread.sysconfig
-Patch0:		spread-3.17.3-soname.diff
-Patch1:		spread-src-3.17.3-mdv_config.diff
+Patch0:		spread-soname.diff
+Patch1:		spread-mdv_config.diff
 Patch2:		spread-src-force_man_page_format.diff
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
@@ -113,7 +113,7 @@ pushd SpreadModule-%{pymod}
 popd
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
@@ -122,7 +122,7 @@ install -d %{buildroot}%{_initrddir}
 install -d %{buildroot}/var/log/spread
 install -d %{buildroot}/var/run/spread
 
-install -m0644 sample.spread.access_ip %{buildroot}%{_sysconfdir}/spread.access_ip
+install -m0644 docs/sample.spread.access_ip %{buildroot}%{_sysconfdir}/spread.access_ip
 install -m0755 spread.init %{buildroot}%{_initrddir}/spread
 install -m0644 spread.sysconfig %{buildroot}%{_sysconfdir}/sysconfig/spread
 
@@ -140,7 +140,7 @@ cat > %{buildroot}%{_sysconfdir}/logrotate.d/spread << EOF
     compress
     missingok
     postrotate
-	/bin/kill -HUP `cat /var/run/spread/spread.pid 2> /dev/null` 2> /dev/null || true
+	/bin/kill -HUP \`cat /var/run/spread/spread.pid 2> /dev/null\` 2> /dev/null || true
     endscript
 }
 EOF
@@ -167,16 +167,17 @@ EOF
 %endif
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc CVS_Readme.txt Changelog PORTING Readme.txt Short_Buffer_Handling.txt TODO
-%doc license.txt
+%doc license.txt release_announcement_*.txt CVS_Readme.txt Readme.txt
+%doc docs/PORTING docs/Short_Buffer_Handling.txt docs/TODO
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/spread.*
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/spread
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/spread
 %attr(0755,root,root) %{_initrddir}/spread
+%{_bindir}/flush_user
 %{_bindir}/sp*
 %{_sbindir}/sp*
 %{_mandir}/man1/*
@@ -186,7 +187,7 @@ EOF
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/lib*.so.*
+%{_libdir}/lib*.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
