@@ -5,7 +5,7 @@
 Summary:	Multicast Group Communication Framework
 Name:		spread
 Version:	4.0.0
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		System/Servers
 License:	BSD-style
 URL:		http://www.spread.org/
