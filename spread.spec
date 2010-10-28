@@ -4,15 +4,14 @@
 
 Summary:	Multicast Group Communication Framework
 Name:		spread
-Version:	4.0.0
-Release:	%mkrel 3
+Version:	4.1.0
+Release:	%mkrel 1
 Group:		System/Servers
 License:	BSD-style
 URL:		http://www.spread.org/
 Source0:	spread-src-%{version}.tar.gz
 Source2:	spread.init
 Source3:	spread.sysconfig
-Patch0:		spread-soname.diff
 Patch1:		spread-mdv_config.diff
 Patch2:		spread-src-force_man_page_format.diff
 Requires(post): rpm-helper
@@ -76,7 +75,6 @@ This package includes the necessary files to develop systems with Spread.
 %prep
 
 %setup -q -n spread-src-%{version}
-%patch0 -p0 -b .soname
 %patch1 -p0 -b .mdv_config
 %patch2 -p1 -b .force_man_page_format
 
