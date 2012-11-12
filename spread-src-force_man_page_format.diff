@@ -1,0 +1,36 @@
+diff -Naur spread-src-4.1.0/configure spread-src-4.1.0.oden/configure
+--- spread-src-4.1.0/configure	2009-06-05 16:22:36.000000000 +0200
++++ spread-src-4.1.0.oden/configure	2010-10-28 10:02:06.326539348 +0200
+@@ -9946,7 +9946,7 @@
+ fi
+ 
+ if test -z "$MANTYPE"; then
+-	for ac_prog in nroff awf
++	for ac_prog in nroff
+ do
+   # Extract the first word of "$ac_prog", so it can be a program name with args.
+ set dummy $ac_prog; ac_word=$2
+@@ -9994,7 +9994,7 @@
+ test -n "$NROFF" || NROFF="/bin/false"
+ 
+ 	if ${NROFF} -mdoc ${srcdir}/docs/spread.1 >/dev/null 2>&1; then
+-		MANTYPE=doc
++		MANTYPE=man
+ 	elif ${NROFF} -man ${srcdir}/docs/spread.1 >/dev/null 2>&1; then
+ 		MANTYPE=man
+ 	else
+diff -Naur spread-src-4.1.0/configure.in spread-src-4.1.0.oden/configure.in
+--- spread-src-4.1.0/configure.in	2009-06-18 22:36:49.000000000 +0200
++++ spread-src-4.1.0.oden/configure.in	2010-10-28 10:02:06.327539427 +0200
+@@ -632,9 +632,9 @@
+ 	]
+ )
+ if test -z "$MANTYPE"; then
+-	AC_PATH_PROGS(NROFF, nroff awf, /bin/false, /usr/bin:/usr/ucb)
++	AC_PATH_PROGS(NROFF, nroff, /bin/false, /usr/bin:/usr/ucb)
+ 	if ${NROFF} -mdoc ${srcdir}/docs/spread.1 >/dev/null 2>&1; then
+-		MANTYPE=doc
++		MANTYPE=man
+ 	elif ${NROFF} -man ${srcdir}/docs/spread.1 >/dev/null 2>&1; then
+ 		MANTYPE=man
+ 	else

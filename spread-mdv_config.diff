@@ -1,0 +1,38 @@
+--- docs/sample.spread.conf	2009-06-02 05:46:12.000000000 +0200
++++ docs/sample.spread.conf.oden	2010-10-28 10:00:34.534058376 +0200
+@@ -62,7 +62,7 @@
+ # cause the daemons to log to "spreadlog_machine1.mydomain.com.log" and
+ # "spreadlog_machine2.mydomain.com.log" respectively.
+ 
+-#EventLogFile = testlog.out
++EventLogFile = /var/log/spread/spread.log
+ 
+ #Set whether to add a timestamp in front of all logged events or not.
+ # Default is no timestamps. Default format is "[%a %d %b %Y %H:%M:%S]".
+@@ -74,7 +74,7 @@
+ 
+ #EventTimeStamp
+ # or
+-#EventTimeStamp = "[%a %d %b %Y %H:%M:%S]"
++EventTimeStamp = "[%a %d %b %Y %H:%M:%S]"
+ 
+ #Set whether to add a precise (microsecond) resolution timestamp to all logged
+ # events or not. This option requires that EventTimeStamp is also enabled. 
+@@ -129,14 +129,14 @@
+ # compile-time preprocessor define SP_RUNTIME_DIR, which is generally
+ # "/var/run/spread".
+ 
+-#RuntimeDir = /var/run/spread
++RuntimeDir = /var/run/spread
+ 
+ #Sets the unix user that the Spread daemon runs as (when launched as
+ # the "root" user).  Not effective on a Windows system.  Defaults to
+ # the user and group "spread".
+ 
+-#DaemonUser = spread
+-#DaemonGroup = spread
++DaemonUser = spread
++DaemonGroup = spread
+ 
+ 
+ #Set the list of authentication methods that the daemon will allow
