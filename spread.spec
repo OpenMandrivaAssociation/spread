@@ -168,3 +168,62 @@ rm -rf %{buildroot}
 %{_libdir}/lib*.a
 %{_includedir}/*
 %{_mandir}/man3/*
+
+
+%changelog
+* Thu Oct 28 2010 Oden Eriksson <oeriksson@mandriva.com> 4.1.0-2mdv2011.0
++ Revision: 589738
+- stupid build system
+
+* Thu Oct 28 2010 Oden Eriksson <oeriksson@mandriva.com> 4.1.0-1mdv2011.0
++ Revision: 589707
+- 4.1.0
+
+* Mon Oct 05 2009 Oden Eriksson <oeriksson@mandriva.com> 4.0.0-3mdv2010.0
++ Revision: 454048
+- rediffed one fuzzy patch
+- rebuild
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+* Tue Oct 28 2008 Oden Eriksson <oeriksson@mandriva.com> 4.0.0-1mdv2009.1
++ Revision: 297851
+- broke out the python module
+- 4.0.0
+- rediffed P0,P1
+
+* Wed Jul 23 2008 Thierry Vignaud <tv@mandriva.org> 3.17.4-5mdv2009.0
++ Revision: 242733
+- rebuild
+- kill re-definition of %%buildroot on Pixel's request
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+* Wed Sep 19 2007 Guillaume Rousse <guillomovitch@mandriva.org> 3.17.4-3mdv2008.0
++ Revision: 90266
+- rebuild
+
+* Sun Sep 09 2007 Oden Eriksson <oeriksson@mandriva.com> 3.17.4-2mdv2008.0
++ Revision: 83634
+- conform to the 2008 specs
+
+
+* Fri Jan 26 2007 Oden Eriksson <oeriksson@mandriva.com> 3.17.4-1mdv2007.0
++ Revision: 114000
+- fix a silly typo...
+- fixed a typo in spread.init
+- force doc format to man
+- Import spread
+
+* Fri Jan 26 2007 Oden Eriksson <oeriksson@mandriva.com> 3.17.4-1mdv2007.1
+- 3.17.4
+
+* Tue Dec 20 2005 Oden Eriksson <oeriksson@mandriva.com> 3.17.3-1mdk
+- initial Mandriva package (conectiva import)
+- added P0, P1
+

@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+# chkconfig: - 79 21
+# description: spread daemon start/stop script.
+# pidfile: /var/run/spread/spread.pid
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+# Source spread configuration.
+if [ -f /etc/sysconfig/spread ] ; then
+    . /etc/sysconfig/spread
+fi
+
+RETVAL=0
+
+case "$1" in
+  start)
+	echo -n "Starting spread: "
+	/usr/sbin/spread -n $NAME &> /dev/null &
+	sleep 2s
+	PID=`pidof spread`
+	if [ -n "$PID" ]; then
+		echo $PID > /var/run/spread/spread.pid
+		touch /var/lock/subsys/spread
+		success "spread startup"
+	else
+		failure "spread startup"
+	fi
+	RETVAL=$?
+	echo
+	;;
+  stop)
+	echo -n "Stopping spread: "
+	if [ -r /var/run/spread/spread.pid ]; then
+	    kill -TERM `cat /var/run/spread/spread.pid`
+	    RETVAL=$?
+	    [ "$RETVAL" = 0 ] && success "stop" || failure "stop"
+	else
+	    success "already stopped"
+	    RETVAL=0
+	fi
+	echo
+	[ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/spread
+	[ "$RETVAL" = 0 ] && rm -f /var/run/spread/spread.pid
+	;;
+  status)
+	status spread
+	;;
+  restart|reload)
+	$0 stop
+	$0 start
+	;;
+  *)
+	echo -n  "Usage: spread {start|stop|status|restart|reload}\n"
+	RETVAL=1
+	;;
+esac
+
+exit $RETVAL
+

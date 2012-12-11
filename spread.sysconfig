@@ -1,0 +1,6 @@
+
+# This option specifies how this host will be known in the spread
+# network. Whatever you set here must be properly configured in
+# spread.conf.
+#
+NAME="localhost"
