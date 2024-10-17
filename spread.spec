@@ -8,7 +8,7 @@ Version:	4.1.0
 Release:	3
 Group:		System/Servers
 License:	BSD-style
-URL:		http://www.spread.org/
+URL:		https://www.spread.org/
 Source0:	spread-src-%{version}.tar.gz
 Source2:	spread.init
 Source3:	spread.sysconfig
